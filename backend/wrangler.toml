@@ -1,0 +1,11 @@
+name = "products-crud-backend"
+main = "src/index.ts"
+compatibility_date = "2024-04-01"
+compatibility_flags = ["nodejs_compat"]
+
+[vars]
+# Valores públicos (si los hubiera) se ponen aquí.
+# Las credenciales de base de datos y Cloudinary se subirán como SECRETOS.
+
+[observability]
+enabled = true
