@@ -5,7 +5,9 @@ import {
 } from "@tanstack/react-query";
 import { getProducts } from "@/lib/services/products.service";
 import ProductList from "@/components/product-list";
-import { getTranslations } from 'next-intl/server';
+import { getTranslations } from "next-intl/server";
+import { LanguageToggle } from "@/components/language-toggle";
+import { ModeToggle } from "@/components/mode-toggle";
 
 interface HomeProps {
   searchParams: Promise<{ search?: string }>;
@@ -13,7 +15,7 @@ interface HomeProps {
 
 export default async function Home({ searchParams }: HomeProps) {
   const queryClient = new QueryClient();
-  const t = await getTranslations('General');
+  const t = await getTranslations("General");
 
   //Se ha comentado para que funcionen los skeletos
   //de carga pero para mejor rendimiento se debe descomentar
@@ -33,9 +35,11 @@ export default async function Home({ searchParams }: HomeProps) {
   return (
     <div className="container mx-auto p-4 space-y-8">
       <header className="flex justify-between items-center">
-        <h1 className="text-3xl font-bold tracking-tight">
-          {t('title')}
-        </h1>
+        <h1 className="text-3xl font-bold tracking-tight">{t("title")}</h1>
+        <div className="flex gap-2">
+          <LanguageToggle />
+          <ModeToggle />
+        </div>
       </header>
 
       <HydrationBoundary state={dehydrate(queryClient)}>

@@ -29,7 +29,7 @@ export default function ProductList() {
 
   return (
     <div className="space-y-4">
-      <div className="flex justify-between items-center gap-4">
+      <div className="flex justify-between items-center flex-wrap gap-4">
         <Input
           placeholder={t('searchPlaceholder')}
           defaultValue={search}
@@ -39,7 +39,8 @@ export default function ProductList() {
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button onClick={() => setEditingId(null)}>
-              <Plus className="mr-2 h-4 w-4" /> {t('addProduct')}
+              <Plus className="mr-2 h-4 w-4" /> 
+              <span className="sm:block hidden p-0">{t('addProduct')}</span>
             </Button>
           </DialogTrigger>
           <DialogContent>

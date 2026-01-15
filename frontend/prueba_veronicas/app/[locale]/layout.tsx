@@ -52,10 +52,6 @@ export default async function RootLayout({
             disableTransitionOnChange
           >
             <TanstackQueryProvider>
-              <div className="absolute top-4 right-4 z-50 flex gap-2">
-                <LanguageToggle />
-                <ModeToggle />
-              </div>
               {children}
               <Toaster position="top-right" richColors />
             </TanstackQueryProvider>
