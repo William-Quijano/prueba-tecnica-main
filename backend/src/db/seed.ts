@@ -1,5 +1,7 @@
-import { db } from "./index";
+import { getDb } from "./index";
 import { products } from "./schema";
+
+const db = getDb(process.env.DATABASE_URL!);
 
 const seedProducts = [
   {

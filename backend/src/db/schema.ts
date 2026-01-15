@@ -1,7 +1,7 @@
 import { pgTable, text, real, timestamp } from "drizzle-orm/pg-core";
 
 export const products = pgTable("products", {
-  id: text("id").primaryKey().default(crypto.randomUUID()),
+  id: text("id").primaryKey().$defaultFn(() => crypto.randomUUID()),
   name: text("name").notNull(),
   price: real("price").notNull(),
   description: text("description").notNull(),

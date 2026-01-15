@@ -1,14 +1,22 @@
 import { Hono } from "hono";
-import { db } from "../db";
-import { products, type NewProduct } from "../db/schema";
+import { getDb } from "../db";
+import { products } from "../db/schema";
 import { eq, or, ilike, count, desc } from "drizzle-orm";
-import { storageService } from "../lib/storage";
+import { getStorageService } from "../lib/storage";
 
-const productsRouter = new Hono();
+type Bindings = {
+  DATABASE_URL: string;
+  CLOUDINARY_CLOUD_NAME: string;
+  CLOUDINARY_API_KEY: string;
+  CLOUDINARY_API_SECRET: string;
+};
+
+const productsRouter = new Hono<{ Bindings: Bindings }>();
 
 // GET /products
 productsRouter.get("/", async (c) => {
   try {
+    const db = getDb(c.env.DATABASE_URL);
     const { search, limit, offset, page } = c.req.query();
     const limitNum = limit ? parseInt(limit) : 10;
     
@@ -61,6 +69,7 @@ productsRouter.get("/", async (c) => {
 // GET /products/:id
 productsRouter.get("/:id", async (c) => {
   try {
+    const db = getDb(c.env.DATABASE_URL);
     const id = c.req.param("id");
     const result = await db.select().from(products).where(eq(products.id, id));
 
@@ -77,8 +86,10 @@ productsRouter.get("/:id", async (c) => {
 // POST /products
 productsRouter.post("/", async (c) => {
   let uploadedImageUrl: string | null = null;
+  const storageService = getStorageService(c.env);
 
   try {
+    const db = getDb(c.env.DATABASE_URL);
     const body = await c.req.parseBody();
 
     if (
@@ -98,12 +109,11 @@ productsRouter.post("/", async (c) => {
     }
 
     const productToInsert = {
-      id: crypto.randomUUID(),
       name: body.name as string,
       description: body.description as string,
       price: parseFloat(body["price"] as string),
       category: body.category as string,
-      image: body.image as string,
+      image: body.image as string, // Will be overwritten if uploaded
     };
 
     if (body.image && body.image instanceof File) {
@@ -118,9 +128,12 @@ productsRouter.post("/", async (c) => {
         console.error("Error al subir la imagen:", uploadError);
         return c.json({ error: "Error al subir la imagen" }, 500);
       }
-    }else{
-      console.error("La imagen tiene que ser un archivo de tipo File")
-      return c.json({ error: "La imagen tiene que ser un archivo de tipo File" }, 400);
+    } else {
+       // Allow string image URLs if not a file (e.g. from seed)
+       if (typeof body.image !== 'string') {
+          console.error("La imagen tiene que ser un archivo de tipo File o URL string")
+          return c.json({ error: "La imagen tiene que ser un archivo de tipo File o URL string" }, 400);
+       }
     }
 
     const [newProduct] = await db
@@ -142,8 +155,10 @@ productsRouter.post("/", async (c) => {
 // PUT /products/:id
 productsRouter.put("/:id", async (c) => {
   let newUploadedImageUrl: string | null = null;
+  const storageService = getStorageService(c.env);
 
   try {
+    const db = getDb(c.env.DATABASE_URL);
     const id = c.req.param("id");
     const body = await c.req.parseBody();
     
@@ -187,7 +202,7 @@ productsRouter.put("/:id", async (c) => {
 
     if (newUploadedImageUrl) {
       updateData.image = newUploadedImageUrl;
-    } else if (typeof image === "string" && image !== existingProduct.image) {
+    } else if (typeof image === "string" && image !== existingProduct.image && image !== "") {
       updateData.image = image;
     }
 
@@ -214,6 +229,8 @@ productsRouter.put("/:id", async (c) => {
 // DELETE /products/:id
 productsRouter.delete("/:id", async (c) => {
   try {
+    const db = getDb(c.env.DATABASE_URL);
+    const storageService = getStorageService(c.env);
     const id = c.req.param("id");
 
     const [product] = await db
