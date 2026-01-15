@@ -1,4 +1,4 @@
-name = "products-crud-backend"
+name = "prueba-tecnica-main"
 main = "src/index.ts"
 compatibility_date = "2024-04-01"
 compatibility_flags = ["nodejs_compat"]
