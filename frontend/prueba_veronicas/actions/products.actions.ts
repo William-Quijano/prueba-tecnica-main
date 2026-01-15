@@ -32,7 +32,7 @@ export async function createProductAction(prevState: unknown, formData: FormData
     return { success: true, message: 'Product created successfully' };
   } catch (error) {
     if (error instanceof z.ZodError) {
-        return { success: false, message: error.errors[0].message };
+        return { success: false, message: error.issues[0].message };
     }
     return { success: false, message: 'Failed to create product' };
   }
@@ -55,7 +55,7 @@ export async function updateProductAction(id: string, prevState: unknown, formDa
       return { success: true, message: 'Product updated successfully' };
     } catch (error) {
       if (error instanceof z.ZodError) {
-          return { success: false, message: error.errors[0].message };
+          return { success: false, message: error.issues[0].message };
       }
       return { success: false, message: 'Failed to update product' };
     }
