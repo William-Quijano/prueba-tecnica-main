@@ -1,0 +1,47 @@
+{
+  "General": {
+    "title": "Product Management",
+    "addProduct": "Add Product",
+    "searchPlaceholder": "Search products...",
+    "loading": "Loading more...",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "actions": "Actions"
+  },
+  "ProductForm": {
+    "createTitle": "Create Product",
+    "editTitle": "Edit Product",
+    "name": "Name",
+    "description": "Description",
+    "price": "Price",
+    "stock": "Stock",
+    "category": "Category",
+    "image": "Image",
+    "save": "Save",
+    "saving": "Saving...",
+    "update": "Update",
+    "validation": {
+        "nameRequired": "Name is required",
+        "descriptionRequired": "Description is required",
+        "pricePositive": "Price must be positive",
+        "stockNonNegative": "Stock must be a non-negative integer",
+        "categoryRequired": "Category is required",
+        "imageRequired": "Image is required",
+        "imageFile": "Image must be a file"
+    }
+  },
+  "ProductGrid": {
+    "noProducts": "No products found.",
+    "deleteTitle": "Are you sure?",
+    "deleteDescription": "This action cannot be undone. This will permanently delete the product."
+  },
+  "ModeToggle": {
+    "light": "Light",
+    "dark": "Dark"
+  },
+  "LanguageToggle": {
+    "spanish": "Spanish",
+    "english": "English"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "General": {
+    "title": "Gestión de Productos",
+    "addProduct": "Agregar Producto",
+    "searchPlaceholder": "Buscar productos...",
+    "loading": "Cargando más...",
+    "edit": "Editar",
+    "delete": "Eliminar",
+    "cancel": "Cancelar",
+    "actions": "Acciones"
+  },
+  "ProductForm": {
+    "createTitle": "Crear Producto",
+    "editTitle": "Editar Producto",
+    "name": "Nombre",
+    "description": "Descripción",
+    "price": "Precio",
+    "stock": "Stock",
+    "category": "Categoría",
+    "image": "Imagen",
+    "save": "Guardar",
+    "saving": "Guardando...",
+    "update": "Actualizar",
+    "validation": {
+        "nameRequired": "El nombre es requerido",
+        "descriptionRequired": "La descripción es requerida",
+        "pricePositive": "El precio debe ser positivo",
+        "stockNonNegative": "El stock debe ser un número entero no negativo",
+        "categoryRequired": "La categoría es requerida",
+        "imageRequired": "La imagen es requerida",
+        "imageFile": "La imagen debe ser un archivo"
+    }
+  },
+  "ProductGrid": {
+    "noProducts": "No se encontraron productos.",
+    "deleteTitle": "¿Estás seguro?",
+    "deleteDescription": "Esta acción no se puede deshacer. Esto eliminará permanentemente el producto."
+  },
+  "ModeToggle": {
+    "light": "Claro",
+    "dark": "Oscuro"
+  },
+  "LanguageToggle": {
+    "spanish": "Español",
+    "english": "Inglés"
+  }
+}
